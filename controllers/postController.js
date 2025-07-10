@@ -43,7 +43,18 @@ function show(req, res) {
 
 //function for store
 function store(req, res) {
-
+    //create a const with title, content, image
+    const { title, content, image } = req.body;
+    //create a const to insert a new pizza
+    const sql = 'INSERT INTO `posts` (title, content, image) VALUES (?, ?, ?);';
+    connection.query(sql, [title, content, image], (err, results) => {
+        if (err) return res.status(500).json({
+            errore: true,
+            message: err.message
+        });
+        console.log(results);
+        res.status(201).json({ id: results.insertId });
+    });
 };
 
 //function for update
