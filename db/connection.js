@@ -5,15 +5,15 @@ const mysql = require('mysql2');
 const credentials = {
     host: 'localhost',
     user: 'root',
-    password: '0502013',
-    database: 'db_blog'
+    password: '05082013',
+    database: 'blog_db'
 };
 
 //create connection
 const connection = mysql.createConnection(credentials);
 
 //log to see if the connection normally function
-console.log(connection);
+//console.log(connection);
 
 //use connect to show if an error occured
 connection.connect(err => {
@@ -22,3 +22,6 @@ connection.connect(err => {
     };
     console.info('Connection is working correctly');
 });
+
+//exports connection
+module.exports = connection;
