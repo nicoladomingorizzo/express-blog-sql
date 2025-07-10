@@ -59,7 +59,7 @@ function store(req, res) {
                 message: "Not found"
             });
         };
-        res.json({ success: true, message: 'Post updated successfull' });
+        res.status(201).json({ id: results.insertId });
     });
 };
 
@@ -70,13 +70,13 @@ function update(req, res) {
     const { title, content, image } = req.body;
     //create a const to insert a new pizza0
     const sql = 'UPDATE `posts` SET title = ?, content = ?, image = ? WHERE id  = ? ;';
-    connection.query(sql, [title, content, image], (err, results) => {
+    connection.query(sql, [title, content, image, id], (err, results) => {
         if (err) return res.status(500).json({
             errore: true,
             message: err.message
         });
         console.log(results);
-        res.status(201).json({ id: results.insertId });
+        res.json({ success: true, message: 'Post updated successfull' });
     });
 };
 
