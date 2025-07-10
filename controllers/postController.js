@@ -53,13 +53,31 @@ function store(req, res) {
             message: err.message
         });
         console.log(results);
-        res.status(201).json({ id: results.insertId });
+        if (results.affectedRows === 0) {
+            return res.status(404).json({
+                error: "true",
+                message: "Not found"
+            });
+        };
+        res.json({ success: true, message: 'Post updated successfull' });
     });
 };
 
 //function for update
 function update(req, res) {
-
+    const id = parseInt(req.params.id);
+    //create a const with title, content, image
+    const { title, content, image } = req.body;
+    //create a const to insert a new pizza0
+    const sql = 'UPDATE `posts` SET title = ?, content = ?, image = ? WHERE id  = ? ;';
+    connection.query(sql, [title, content, image], (err, results) => {
+        if (err) return res.status(500).json({
+            errore: true,
+            message: err.message
+        });
+        console.log(results);
+        res.status(201).json({ id: results.insertId });
+    });
 };
 
 //function for modify
