@@ -10,6 +10,12 @@ const port = 3020;
 //import postRouter
 const postsRouter = require('./routes/posts');
 
+//import middleware for server error
+const handleServerError = require('./middlewares/handleServerError');
+
+//import middleware for client error
+const notFoundError = require('./middlewares/notFoundError');
+
 //body parsing
 app.use(express.json());
 
@@ -23,6 +29,12 @@ app.use('/api/posts', postsRouter);
 app.get('/', (req, res) => {
     res.send('<h1>Welcome to Our Bakery</h1>')
 });
+
+//middleware for server error
+app.use(handleServerError);
+
+//middleware for client error
+app.use(notFoundError);
 
 //listening server
 app.listen(port, () => {
